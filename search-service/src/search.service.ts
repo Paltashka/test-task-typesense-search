@@ -27,7 +27,6 @@ export class SearchService {
       await this.client.collections(collectionName).retrieve();
       console.log(`Collection "${collectionName}" already exists.`);
     } catch (error) {
-      if (error.statusCode === 404) {
         const schema: CollectionCreateSchema = {
           name: collectionName,
           fields: [
@@ -38,10 +37,6 @@ export class SearchService {
 
         await this.client.collections().create(schema);
         console.log(`Collection created: ${collectionName}`);
-      } else {
-        console.error('Error checking/creating collection:', error);
-        throw error;
-      }
     }
   }
 
